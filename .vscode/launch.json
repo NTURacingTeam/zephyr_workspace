@@ -1,0 +1,48 @@
+{
+    "configurations": [
+        {
+            "name": "Build, Flash & Debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder:app}",
+            "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
+            "runToEntryPoint": "main",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "interface": "swd",
+            "device": "${config:bsp.soc}",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
+            "showDevDebugOutput": "raw",
+            "configFiles": [
+                "${config:bsp.debug_config}"
+            ],
+            "svdFile": "${config:bsp.svd}",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 2
+            },
+            "preLaunchTask": "West Build"
+        },
+        {
+            "name": "Attach",
+            "request": "attach",
+            "cwd": "${workspaceFolder:app}",
+            "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "interface": "swd",
+            "device": "${config:bsp.soc}",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
+            "showDevDebugOutput": "raw",
+            "configFiles": [
+                "${config:bsp.debug_config}"
+            ],
+            "svdFile": "${config:bsp.svd}",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 2
+            }
+        }
+    ]
+}

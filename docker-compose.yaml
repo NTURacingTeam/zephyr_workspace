@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  zephyr:
+    image: zephyr
+    container_name: zephyr
+    hostname: zephyr
+    user: user:user
+    group_add:
+      - dialout
+      - sudo
+    volumes:
+      - /dev:/dev
+      - /etc/localtime:/etc/localtime:ro
+      - .:/workdir
+    tmpfs:
+      - /tmp
+    tty: true
+    stdin_open: true
+    privileged: true

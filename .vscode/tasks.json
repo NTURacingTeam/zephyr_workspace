@@ -1,0 +1,111 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "West Build",
+            "type": "process",
+            "group": "build",
+            "command": "${config:west}",
+            "args": [
+                "build",
+                "--pristine",
+                "auto",
+                "--build-dir",
+                "${config:app.build_dir}",
+                "--board",
+                "${config:bsp.board}${config:bsp.cpu}",
+                "${config:app.name}",
+                "${config:app.zephyr_config}",
+                "${config:app.zephyr_dtc_overlay}"
+            ],
+            "problemMatcher": [ "$gcc" ]
+        },
+        {
+            "label": "West Flash",
+            "type": "process",
+            "group": "build",
+            "command": "${config:west}",
+            "args": [
+                "flash",
+                "--build-dir",
+                "${config:app.build_dir}",
+            ],
+            "problemMatcher": [ "$gcc" ]
+        },
+        {
+            "label": "Wset Build and Flash",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn":[
+                "West Build",
+                "West Flash",
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": [ "$gcc" ]
+        },
+        {
+            "label": "Clean Build",
+            "type": "shell",
+            "group": "build",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "${config:app.build_dir}"
+            ],
+            "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "West Twister Test",
+            "type": "process",
+            "group": "build",
+            "command": "${config:west}",
+            "args": [
+                "twister",
+                "-p",
+                "${config:twister.host_test_arch}",
+                "-T",
+                "${workspaceFolder:app}"
+            ],
+            "dependsOn": [
+                // "West Build Bootloader",
+                // "West Build App",
+             ],
+            "problemMatcher": []
+        },
+        {
+            "label": "West Twister Device Test",
+            "type": "process",
+            "group": "build",
+            "command": "${config:west}",
+            "args": [
+                "twister",
+                "--device-testing",
+                "--device-serial",
+                "/dev/ttyACM0",
+                "--device-serial-baud",
+                "115200",
+                "-p",
+                "${config:bsp.board}${config:bsp.cpu}",
+                "-T",
+                "${workspaceFolder:app}"
+            ],
+            "dependsOn": [
+                // "West Build Bootloader",
+                // "West Build App",
+             ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Twister Clean Output",
+            "type": "shell",
+            "group": "build",
+            "command": "rm",
+            "args": ["-rf", "*twister-out*"],
+            "dependsOn": [],
+            "problemMatcher": []
+        }
+    ]
+}
