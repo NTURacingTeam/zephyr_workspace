@@ -3,10 +3,10 @@
         {
             "name": "Build, Flash & Debug",
             "request": "launch",
+            "type": "cortex-debug",
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
             "runToEntryPoint": "main",
-            "type": "cortex-debug",
             "servertype": "openocd",
             "interface": "swd",
             "device": "${config:bsp.soc}",
@@ -26,9 +26,9 @@
         {
             "name": "Attach",
             "request": "attach",
+            "type": "cortex-debug",
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
-            "type": "cortex-debug",
             "servertype": "openocd",
             "interface": "swd",
             "device": "${config:bsp.soc}",
@@ -43,6 +43,16 @@
                 "enabled": true,
                 "samplesPerSecond": 2
             }
+        },
+        {
+            "name": "GDB Stub Client",
+            "request": "attach",
+            "type": "gdb",
+            "target": "localhost:1234",
+            "remote": true,
+            "cwd": "${workspaceFolder:app}",
+            "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
+            "gdbpath": "${config:zephyr_sdk_path}/xtensa-espressif_esp32_zephyr-elf/bin/xtensa-espressif_esp32_zephyr-elf-gdb",
         }
     ]
 }

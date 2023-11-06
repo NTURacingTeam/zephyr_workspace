@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "cschlosser.doxdocgen",
+        "marus25.cortex-debug",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "plorefice.devicetree",
+        "twxs.cmake",
+        "webfreak.debug",
+        "xaver.clang-format",
+    ]
+}

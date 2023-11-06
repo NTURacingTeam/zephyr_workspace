@@ -1,0 +1,7 @@
+# ignore everything in this directory
+/*
+
+!.gitignore
+
+# except this blink example
+!/blink

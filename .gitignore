@@ -1,5 +1,9 @@
-.west
 build
+
+# west config
+/.west
+
+# zephyr projects from applications/west.yml
 /bootloader
 /modules
 /tools
