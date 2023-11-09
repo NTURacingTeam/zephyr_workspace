@@ -1,13 +1,13 @@
 / {
     aliases {
-        led0 = &led0;
+        led0 = &built_in_led;
     };
 
     leds {
         compatible = "gpio-leds";
-        led0: led_0 {
+        built_in_led: led_0 {
             gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
-            label = "LED 0";
+            label = "Built-in LED";
         };
     };
 };
