@@ -23,7 +23,6 @@
             "board": "esp32",
             "board_root": "${workspaceFolder:zephyrproject}/zephyr",
             "board_path": "${config:bsp.board_root}/boards/arm/${config:bsp.board}",
-            "svd": "${workspaceFolder}/svd/STM32H743x.svd",
             "debug_config": "${config:bsp.board_path}/support/openocd.cfg"
         },
 
@@ -45,8 +44,7 @@
         ],
         "files.associations": {
             "*.overlay": "dts",
-            "sensor.h": "c",
-            "stdint.h": "c"
+            "Kconfig": "plaintext",
         },
     }
 }

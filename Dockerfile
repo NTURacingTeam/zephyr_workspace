@@ -1,6 +1,6 @@
 FROM zephyrprojectrtos/zephyr-build:latest
 
-# switch to root user for perssion
+# switch to root user for elevated permission
 USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \

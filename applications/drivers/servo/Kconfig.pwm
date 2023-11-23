@@ -1,0 +1,7 @@
+config SERVO_PWM
+    bool "PWM-Driven Servo Driver"
+	default y
+	depends on DT_HAS_PWM_SERVO_ENABLED
+    select PWM
+    help
+      This option enables PWM-driven servo driver.
