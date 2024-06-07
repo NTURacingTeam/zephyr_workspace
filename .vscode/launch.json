@@ -7,16 +7,16 @@
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
             "runToEntryPoint": "main",
+            // "breakAfterReset": true,
             "servertype": "openocd",
             "interface": "swd",
             "device": "${config:bsp.soc}",
-            "toolchainPrefix": "arm-zephyr-eabi",
-            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
-            "showDevDebugOutput": "raw",
             "configFiles": [
                 "${config:bsp.debug_config}"
             ],
-            "svdFile": "${config:bsp.svd}",
+            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "showDevDebugOutput": "none",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 2
@@ -32,27 +32,33 @@
             "servertype": "openocd",
             "interface": "swd",
             "device": "${config:bsp.soc}",
-            "toolchainPrefix": "arm-zephyr-eabi",
-            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
-            "showDevDebugOutput": "raw",
             "configFiles": [
                 "${config:bsp.debug_config}"
             ],
-            "svdFile": "${config:bsp.svd}",
+            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "showDevDebugOutput": "none",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 2
             }
         },
         {
-            "name": "GDB Stub Client",
+            "name": "Remote Attach",
             "request": "attach",
-            "type": "gdb",
-            "target": "localhost:1234",
-            "remote": true,
+            "type": "cortex-debug",
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
-            "gdbpath": "${config:zephyr_sdk_path}/xtensa-espressif_esp32_zephyr-elf/bin/xtensa-espressif_esp32_zephyr-elf-gdb",
+            "runToEntryPoint": "main",
+            "servertype": "external",
+            "gdbTarget": "raspberrypi.local:3333",
+            "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "showDevDebugOutput": "none",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 2
+            }
         }
     ]
 }

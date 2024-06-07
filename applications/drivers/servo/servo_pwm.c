@@ -1,6 +1,7 @@
 #define DT_DRV_COMPAT pwm_servo
 
 // glibc include
+#include <math.h>
 #include <stdint.h>
 
 // zephyr include
@@ -26,7 +27,7 @@ struct servo_pwm_config {
   const int initial_duty;
 };
 
-static float map(const struct servo_pwm_config *config, int duty) {
+static uint32_t map(const struct servo_pwm_config *config, int duty) {
   __ASSERT(duty <= SERVO_MAX_DUTY && duty >= SERVO_MIN_DUTY,
            "Invalid duty cycle %d", duty);
 
@@ -34,8 +35,9 @@ static float map(const struct servo_pwm_config *config, int duty) {
     return config->neutral_pulse +
            (config->max_pulse - config->neutral_pulse) * duty / SERVO_MAX_DUTY;
   } else {
-    return config->neutral_pulse +
-           (config->neutral_pulse - config->min_pulse) * duty / SERVO_MAX_DUTY;
+    // avoid negative values for unsigned types
+    return config->neutral_pulse - (config->neutral_pulse - config->min_pulse) *
+                                       (-duty) / SERVO_MAX_DUTY;
   }
 }
 

@@ -1,0 +1,5 @@
+# STM32G431KB Nucleo board configuration
+
+config BOARD_NUCLEO_G431KB
+	bool "Nucleo G431KB Development Board"
+	depends on SOC_STM32G431XX
