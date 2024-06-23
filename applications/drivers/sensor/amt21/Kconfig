@@ -1,0 +1,10 @@
+menuconfig AMT21
+    bool "CUI Devices AMT21 series absolute encoders"
+    default y
+    depends on DT_HAS_CUI_AMT21_ENABLED
+    help
+      Enable driver for AMT21 series absolute encoder.
+
+if AMT21
+
+endif # AMT21

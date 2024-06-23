@@ -6,5 +6,6 @@ build
 # zephyr projects from applications/west.yml
 /bootloader
 /modules
+/optional
 /tools
 /zephyr

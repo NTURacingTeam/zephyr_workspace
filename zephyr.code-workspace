@@ -6,7 +6,7 @@
         },
         {
             "name": "app",
-            "path": "applications/app/canopen"
+            "path": "applications/app/nturt_rear_box"
         }
     ],
 
@@ -37,9 +37,7 @@
         "app": {
             "name": "${workspaceFolder:app}",
             "build_dir": "${workspaceFolder:app}/build",
-            "zephyr_config": "",  // -DOVERLAY_CONFIG=<path_relative_to_sample> use ; for multiple files
-            "zephyr_dtc_overlay": "",  // "-DDTC_OVERLAY_FILE=boards/nucleo_f303re.overlay"  // -DDTC_OVERLAY_FILE=<path_relative_to_sample> use ; for multiple files
-            "compile_args": ""
+            "cmake_opts": "-DCONFIG_COMPILER_SAVE_TEMPS=y"
         },
 
         "C_Cpp.default.compilerPath": "${config:zephyr_sdk_path}/bin/arm-zephyr-eabi-gcc",
@@ -49,9 +47,56 @@
             "${config:zephyr_sdk_path}/arm-zephyr-eabi/include",
             "${config:zephyr_sdk_path}/arm-zephyr-eabi/sys-include"
         ],
+
+        "[c]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        },
+        "[cpp]": {
+            "editor.defaultFormatter": "xaver.clang-format"
+        },
+
         "files.associations": {
             "*.overlay": "dts",
             "Kconfig": "plaintext",
+            "co_sdo.h": "c",
+            "errno.h": "c",
+            "co_driver.h": "c",
+            "co_driver_target.h": "c",
+            "jy901b.h": "c",
+            "devicetree.h": "c",
+            "kernel.h": "c",
+            "input.h": "c",
+            "input-event-codes.h": "c",
+            "gpio.h": "c",
+            "gpio_utils.h": "c",
+            "mutex": "c",
+            "__locale": "c",
+            "stdint.h": "c",
+            "byteorder.h": "c",
+            "optional": "c",
+            "ratio": "c",
+            "system_error": "c",
+            "array": "c",
+            "functional": "c",
+            "tuple": "c",
+            "type_traits": "c",
+            "utility": "c",
+            "variant": "c",
+            "__bit_reference": "c",
+            "__node_handle": "c",
+            "atomic": "c",
+            "bitset": "c",
+            "deque": "c",
+            "__memory": "c",
+            "limits": "c",
+            "locale": "c",
+            "vector": "c",
+            "log.h": "c",
+            "util.h": "c",
+            "typeinfo": "c",
+            "device.h": "c",
+            "uart.h": "c",
+            "sensor.h": "c"
         },
     }
 }

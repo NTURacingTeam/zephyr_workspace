@@ -15,8 +15,8 @@
                 "--board",
                 "${config:bsp.board}${config:bsp.cpu}",
                 "${config:app.name}",
-                "${config:app.zephyr_config}",
-                "${config:app.zephyr_dtc_overlay}"
+                "--",
+                "${config:app.cmake_opts}",
             ],
             "problemMatcher": [ "$gcc" ]
         },
@@ -67,7 +67,7 @@
                 "-p",
                 "${config:twister.host_test_arch}",
                 "-T",
-                "${workspaceFolder:app}"
+                "${workspaceFolder:app}",
             ],
             "dependsOn": [
                 // "West Build Bootloader",
@@ -90,7 +90,7 @@
                 "-p",
                 "${config:bsp.board}${config:bsp.cpu}",
                 "-T",
-                "${workspaceFolder:app}"
+                "${workspaceFolder:app}",
             ],
             "dependsOn": [
                 // "West Build Bootloader",

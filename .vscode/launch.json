@@ -6,7 +6,7 @@
             "type": "cortex-debug",
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
-            "runToEntryPoint": "main",
+            // "runToEntryPoint": "main",
             // "breakAfterReset": true,
             "servertype": "openocd",
             "interface": "swd",
@@ -21,7 +21,7 @@
                 "enabled": true,
                 "samplesPerSecond": 2
             },
-            "preLaunchTask": "West Build"
+            "preLaunchTask": "Wset Build and Flash"
         },
         {
             "name": "Attach",

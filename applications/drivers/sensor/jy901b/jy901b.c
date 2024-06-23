@@ -3,10 +3,10 @@
 #define DT_DRV_COMPAT witmotion_jy901b
 
 // zephyr include
+#include <zephyr/device.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/i2c.h>
 #include <zephyr/drivers/sensor.h>
-#include <zephyr/init.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/byteorder.h>
 
