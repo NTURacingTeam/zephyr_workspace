@@ -1,3 +1,5 @@
 add_subdirectory_ifdef(CONFIG_GPIO gpio)
+add_subdirectory_ifdef(CONFIG_INPUT input)
+add_subdirectory_ifdef(CONFIG_LED led)
 add_subdirectory_ifdef(CONFIG_SENSOR sensor)
 add_subdirectory_ifdef(CONFIG_SERVO servo)

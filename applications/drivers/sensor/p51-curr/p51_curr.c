@@ -15,9 +15,9 @@ LOG_MODULE_REGISTER(p51_curr, CONFIG_SENSOR_LOG_LEVEL);
 
 #define PSI_TO_MILLI_HPA 68948
 
-#define P51_CURR_MIN_MA 4
-#define P51_CURR_MAX_MA 20
-#define P51_CURR_SCALE (P51_CURR_MAX_MA - P51_CURR_MIN_MA)
+#define P51_CURR_MIN_UA 4000
+#define P51_CURR_MAX_UA 20000
+#define P51_CURR_SCALE_UA (P51_CURR_MIN_UA - P51_CURR_MAX_UA)
 
 struct p51_curr_data {
   struct sensor_value val;
@@ -30,8 +30,29 @@ struct p51_curr_config {
 
   int shunt_resistor;
 
-  uint64_t offset;
+  int tolerance;
 };
+
+static int p51_read_curr(const struct p51_curr_config* config, int* ua) {
+  int ret;
+  uint16_t raw;
+  struct adc_sequence seq = {
+      .buffer = &raw,
+      .buffer_size = sizeof(raw),
+  };
+
+  adc_sequence_init_dt(&config->adc, &seq);
+  ret = adc_read_dt(&config->adc, &seq);
+  if (ret < 0) {
+    return ret;
+  }
+
+  int mv = raw;
+  adc_raw_to_millivolts_dt(&config->adc, &mv);
+  *ua = (int64_t)mv * 1000000 / config->shunt_resistor;
+
+  return 0;
+}
 
 static int p51_curr_init(const struct device* dev) {
   const struct p51_curr_config* config = dev->config;
@@ -66,27 +87,28 @@ static int p51_curr_sample_fetch(const struct device* dev,
   struct p51_curr_data* data = dev->data;
   const struct p51_curr_config* config = dev->config;
 
-  uint16_t raw;
-  struct adc_sequence seq = {
-      .buffer = &raw,
-      .buffer_size = sizeof(raw),
-  };
-
-  adc_sequence_init_dt(&config->adc, &seq);
-  ret = adc_read_dt(&config->adc, &seq);
+  int ua;
+  ret = p51_read_curr(config, &ua);
   if (ret < 0) {
     LOG_ERR("Failed to read ADC channel %s: %s", config->adc.dev->name,
             strerror(-ret));
     return ret;
   }
 
-  int mv = raw;
-  adc_raw_to_millivolts_dt(&config->adc, &mv);
-  int64_t offset =
-      P51_CURR_MIN_MA * config->full_scale * PSI_TO_MILLI_HPA / P51_CURR_SCALE;
-  int64_t conv = (int64_t)mv * 1000 * config->full_scale * PSI_TO_MILLI_HPA /
-                     config->shunt_resistor / P51_CURR_SCALE -
-                 offset;
+  if (ua < P51_CURR_MIN_UA * (100 - config->tolerance) / 100) {
+    LOG_ERR("Current below minimum: %d uA", ua);
+    return -EIO;
+  } else if (ua < P51_CURR_MIN_UA) {
+    ua = P51_CURR_MIN_UA;
+  } else if (ua > P51_CURR_MAX_UA * (100 + config->tolerance) / 100) {
+    LOG_ERR("Current above maximum: %d uA", ua);
+    return -EIO;
+  } else if (ua > P51_CURR_MAX_UA) {
+    ua = P51_CURR_MAX_UA;
+  }
+
+  int64_t conv = (ua - P51_CURR_MIN_UA) * config->full_scale *
+                 PSI_TO_MILLI_HPA / P51_CURR_SCALE_UA;
   sensor_value_from_milli(&data->val, conv);
 
   return 0;
@@ -117,6 +139,7 @@ static const struct sensor_driver_api p51_curr_api = {
       .adc = ADC_DT_SPEC_INST_GET_BY_IDX(inst, 0),                         \
       .full_scale = DT_INST_PROP(inst, full_scale),                        \
       .shunt_resistor = DT_INST_PROP(inst, shunt_resistor),                \
+      .tolerance = DT_INST_PROP(inst, tolerance),                          \
   };                                                                       \
                                                                            \
   DEVICE_DT_INST_DEFINE(inst, &p51_curr_init, NULL, &p51_curr_data_##inst, \

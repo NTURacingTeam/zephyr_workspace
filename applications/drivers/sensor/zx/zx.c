@@ -73,8 +73,8 @@ static int zx_sample_fetch(const struct device* dev, enum sensor_channel chan) {
 
   int mv = raw;
   adc_raw_to_millivolts_dt(&config->adc, &mv);
-  sensor_value_from_micro(&data->val,
-                          (int64_t)config->stroke * mv * 1000 / ZX_MAX_MV);
+  sensor_value_from_micro(&data->val, (int64_t)config->stroke *
+                                          (ZX_MAX_MV - mv) * 1000 / ZX_MAX_MV);
 
   return 0;
 }

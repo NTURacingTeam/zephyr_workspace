@@ -1,6 +1,8 @@
 menu "Drivers"
 
 rsource "gpio/Kconfig"
+rsource "gpio/Kconfig"
+rsource "led/Kconfig"
 rsource "sensor/Kconfig"
 rsource "servo/Kconfig"
 

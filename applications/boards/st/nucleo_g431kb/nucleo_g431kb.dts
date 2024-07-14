@@ -38,10 +38,6 @@
 	status = "okay";
 };
 
-&clk_lse {
-	status = "okay";
-};
-
 &clk_hsi48 {
 	status = "okay";
 };

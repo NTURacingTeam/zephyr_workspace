@@ -1,0 +1,11 @@
+config INPUT_DASHBOARD
+    bool "NTU Racing dashboard button input keys"
+    default y
+    depends on DT_HAS_NTURT_DASHBOARD_ENABLED
+    depends on CANOPENNODE
+    help
+      Enable driver for dashboard buttons
+
+if INPUT_DASHBOARD
+
+endif

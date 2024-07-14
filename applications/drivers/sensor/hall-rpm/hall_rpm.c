@@ -31,8 +31,9 @@ struct hall_rpm_data {
   /// @brief Pulse count since last timer update.
   atomic_t count;
 
-  /// @brief Last cycle time in HW cycles.
-  uint64_t cycle;
+  /// @brief Last cycle time in HW cycles. Counter overflow is handled by
+  /// unsigned integer underflow when subtracting.
+  uint32_t cycle;
 
   /// @brief Last calculated RPM in milli RPM.
   int64_t last;
@@ -62,7 +63,7 @@ void hall_rpm_gpio_cb(const struct device* dev, struct gpio_callback* cb,
 void hall_rpm_timer_cb(struct k_timer* timer) {
   struct hall_rpm_data* data = CONTAINER_OF(timer, struct hall_rpm_data, timer);
 
-  uint64_t cycle = k_cycle_get_64();
+  uint64_t cycle = k_cycle_get_32();
   int64_t raw = (int64_t)atomic_get(&data->count) * 1000 * 60 *
                 sys_clock_hw_cycles_per_sec() / (cycle - data->cycle) /
                 data->config->num_tooth;
@@ -104,7 +105,7 @@ static int hall_rpm_init(const struct device* dev) {
   k_timer_start(&data->timer, K_MSEC(data->sampling_int),
                 K_MSEC(data->sampling_int));
 
-  data->cycle = k_cycle_get_64();
+  data->cycle = k_cycle_get_32();
   data->alpha = data->sampling_int * 1000 / config->time_const;
 
   return 0;
@@ -150,7 +151,7 @@ static int hall_rpm_attr_set(const struct device* dev, enum sensor_channel chan,
   k_timer_start(&data->timer, K_MSEC(data->sampling_int),
                 K_MSEC(data->sampling_int));
 
-  data->cycle = k_cycle_get_64();
+  data->cycle = k_cycle_get_32();
   data->alpha = data->sampling_int * 1000 / config->time_const;
 
   return 0;
