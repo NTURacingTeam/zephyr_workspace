@@ -1,5 +1,0 @@
-if INPUT
-
-rsource "Kconfig.dashboard"
-
-endif # INPUT

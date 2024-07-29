@@ -96,13 +96,15 @@ static int amt21_init(const struct device* dev) {
 
   // check if the device is connected
   uint16_t pos;
-  ret = amt21_read(config, AMT21_CMD_READ_POS, &pos);
-  if (ret != 0 && ret != -EILSEQ) {
-    LOG_ERR("Failed to pin AMT21: %s", strerror(-ret));
-    return ret;
+  for (int i = 0; i < 5; i++) {
+    ret = amt21_read(config, AMT21_CMD_READ_POS, &pos);
+    if (ret == 0 || ret == -EILSEQ) {
+      return 0;
+    }
   }
 
-  return 0;
+  LOG_ERR("Failed to pin AMT21 after 5 ties: %s", strerror(-ret));
+  return ret;
 }
 
 static int amt21_sample_fetch(const struct device* dev,

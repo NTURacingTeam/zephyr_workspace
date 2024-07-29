@@ -1,0 +1,7 @@
+config AUXDISPLAY_GPIO_SEG_DISPLAY
+    bool "Seven segment displays controlled by gpio as auxiliary display"
+    default y
+    depends on DT_HAS_GPIO_SEG_DISPLAY_ENABLED
+    help
+      Enable driver for seven segment displays controlled by gpio as auxiliary
+      display

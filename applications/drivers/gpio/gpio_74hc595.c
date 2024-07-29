@@ -46,6 +46,7 @@ struct gpio_74hc595_child_config {
   /* gpio_driver_config needs to be first */
   struct gpio_driver_config gpio;
 
+  /* index of the gpio is the reversed order of its register */
   int index;
 
   const struct gpio_74hc595_config* parent;
@@ -124,12 +125,14 @@ static int gpio_74hc595_port_get_raw(const struct device* dev,
 
 static int gpio_74hc595_port_set_masked_raw(const struct device* dev,
                                             uint32_t mask, uint32_t value) {
+  const struct gpio_74hc595_child_config* config = dev->config;
   struct gpio_74hc595_data* prt_data =
       ((struct gpio_74hc595_child_data*)dev->data)->parent;
 
   k_mutex_lock(&prt_data->lock, K_FOREVER);
 
-  int ret = gpio_74hc595_write_output(dev, mask & value);
+  int ret = gpio_74hc595_write_output(
+      dev, (prt_data->output[config->index] & ~mask) | (mask & value));
 
   k_mutex_unlock(&prt_data->lock);
   return ret;
@@ -194,7 +197,7 @@ static const struct gpio_driver_api gpio_74hc595_api = {
 
 #define ZERO_AND_COMMA(n) 0,
 
-#define GPIO_74HC595_CHILD_INIT(id, inst)                                \
+#define GPIO_74HC595_CHILD_INIT(id, inst, num)                           \
   static struct gpio_74hc595_child_data gpio_74hc595_child_data_##id = { \
       .parent = &gpio_74hc595_data_##inst,                               \
   };                                                                     \
@@ -205,7 +208,7 @@ static const struct gpio_driver_api gpio_74hc595_api = {
               {                                                          \
                   .port_pin_mask = GPIO_PORT_PIN_MASK_FROM_DT_NODE(id),  \
               },                                                         \
-          .index = DT_REG_ADDR(id),                                      \
+          .index = num - DT_REG_ADDR(id) - 1,                            \
           .parent = &gpio_74hc595_config_##inst,                         \
   };                                                                     \
                                                                          \
@@ -214,22 +217,23 @@ static const struct gpio_driver_api gpio_74hc595_api = {
                    &gpio_74hc595_child_config_##id, POST_KERNEL,         \
                    CONFIG_GPIO_74HC595_INIT_PRIORITY, &gpio_74hc595_api);
 
-#define GPIO_74HC595_INIT(inst)                                              \
-  static uint8_t output_##inst[] = {                                         \
-      DT_INST_FOREACH_CHILD(inst, ZERO_AND_COMMA)};                          \
-                                                                             \
-  static struct gpio_74hc595_data gpio_74hc595_data_##inst = {               \
-      .lock = Z_MUTEX_INITIALIZER(gpio_74hc595_data_##inst.lock),            \
-      .output = output_##inst,                                               \
-      .initialized = false,                                                  \
-  };                                                                         \
-                                                                             \
-  static const struct gpio_74hc595_config gpio_74hc595_config_##inst = {     \
-      .spi = SPI_DT_SPEC_INST_GET(                                           \
-          inst, SPI_OP_MODE_MASTER | SPI_TRANSFER_MSB | SPI_WORD_SET(8), 0), \
-      .num_childs = sizeof(output_##inst) / sizeof(uint8_t),                 \
-  };                                                                         \
-                                                                             \
-  DT_INST_FOREACH_CHILD_STATUS_OKAY_VARGS(inst, GPIO_74HC595_CHILD_INIT, inst)
+#define GPIO_74HC595_INIT(inst)                                                \
+  static uint8_t output_##inst[] = {                                           \
+      DT_INST_FOREACH_CHILD(inst, ZERO_AND_COMMA)};                            \
+                                                                               \
+  static struct gpio_74hc595_data gpio_74hc595_data_##inst = {                 \
+      .lock = Z_MUTEX_INITIALIZER(gpio_74hc595_data_##inst.lock),              \
+      .output = output_##inst,                                                 \
+      .initialized = false,                                                    \
+  };                                                                           \
+                                                                               \
+  static const struct gpio_74hc595_config gpio_74hc595_config_##inst = {       \
+      .spi = SPI_DT_SPEC_INST_GET(                                             \
+          inst, SPI_OP_MODE_MASTER | SPI_TRANSFER_MSB | SPI_WORD_SET(8), 0),   \
+      .num_childs = sizeof(output_##inst) / sizeof(uint8_t),                   \
+  };                                                                           \
+                                                                               \
+  DT_INST_FOREACH_CHILD_STATUS_OKAY_VARGS(inst, GPIO_74HC595_CHILD_INIT, inst, \
+                                          DT_INST_CHILD_NUM_STATUS_OKAY(inst))
 
 DT_INST_FOREACH_STATUS_OKAY(GPIO_74HC595_INIT)

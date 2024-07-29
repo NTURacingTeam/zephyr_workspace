@@ -1,0 +1,61 @@
+config NTURT
+	bool "Support for NTURT library"
+	depends on CANOPENNODE
+	help
+	  This option enables NTU Racing Team common library
+
+if NTURT
+
+module = NTURT
+module-str = NTURT
+source "subsys/logging/Kconfig.template.log_config"
+
+config NTURT_SYS_INIT_PRIORITY
+	int "NTURT system module init priority"
+	default 0
+	help
+	  NTURT common library system module initialization priority.
+
+config NTURT_SENSORS_INIT_PRIORITY
+	int "NTURT sensors module init priority"
+	default 10
+	help
+	  NTURT common library sensors module initialization priority.
+
+config NTURT_MSG_INIT_PRIORITY
+	int "NTURT message module init priority"
+	default 20
+	help
+	  NTURT common library message module initialization priority.
+
+config NTURT_STATES_INIT_PRIORITY
+	int "NTURT states module init priority"
+	default 50
+	help
+	  NTURT common library states module init priority.
+
+config NTURT_ERR_INIT_PRIORITY
+	int "NTURT error module init priority"
+	default 90
+	help
+	  NTURT common library error module initialization priority.
+
+config NTURT_CTRL_THREAD_PRIORITY
+	int "NTURT control module thread priority"
+	default 1
+	help
+	  NTURT common library control module thread priority.
+
+config NTURT_SENSORS_THREAD_PRIORITY
+	int "NTURT sensors module thread priority"
+	default 10
+	help
+	  NTURT common library sensors module thread priority.
+
+config NTURT_DASH_THREAD_PRIORITY
+	int "NTURT dashboard module thread priority"
+	default 11
+	help
+	  NTURT common library dashboard module thread priority.
+
+endif # NTURT

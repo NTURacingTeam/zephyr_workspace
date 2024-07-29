@@ -28,13 +28,26 @@
 		};
 	};
 
+	pwmleds {
+		compatible = "pwm-leds";
+
+		green_pwm_led: green_pwm_led {
+			pwms = <&pwm4 3 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		};
+	};
+
 	aliases {
 		led0 = &green_led;
+		pwm-led0 = &green_pwm_led;
 		watchdog0 = &iwdg;
 	};
 };
 
 &clk_lsi {
+	status = "okay";
+};
+
+&clk_hsi {
 	status = "okay";
 };
 
@@ -91,6 +104,16 @@
 		     &spi2_miso_pa10 &spi2_mosi_pa11>;
 	pinctrl-names = "default";
 	status = "okay";
+};
+
+&timers4 {
+	st,prescaler = <10000>;
+	status = "okay";
+	pwm4: pwm {
+		pinctrl-0 = <&tim4_ch3_pb8>;
+		pinctrl-names = "default";
+		status = "okay";
+	};
 };
 
 stm32_lp_tick_source: &lptim1 {

@@ -19,7 +19,7 @@
             "showDevDebugOutput": "none",
             "liveWatch": {
                 "enabled": true,
-                "samplesPerSecond": 2
+                "samplesPerSecond": 1
             },
             "preLaunchTask": "Wset Build and Flash"
         },

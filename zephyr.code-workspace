@@ -6,7 +6,7 @@
         },
         {
             "name": "app",
-            "path": "applications/app/nturt_rear_box"
+            "path": "applications/app/blink"
         }
     ],
 
@@ -39,7 +39,7 @@
         "app": {
             "name": "${workspaceFolder:app}",
             "build_dir": "${workspaceFolder:app}/build",
-            "cmake_opts": "", // "-DCONFIG_COMPILER_SAVE_TEMPS=y"
+            "cmake_opts": "" // "-DCONFIG_COMPILER_SAVE_TEMPS=y"
         },
 
         "C_Cpp.default.compilerPath": "${config:zephyr_sdk_path}/bin/arm-zephyr-eabi-gcc",

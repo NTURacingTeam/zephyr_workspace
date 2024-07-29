@@ -1,0 +1,5 @@
+menu "Libraries"
+
+rsource "nturt/Kconfig"
+
+endmenu

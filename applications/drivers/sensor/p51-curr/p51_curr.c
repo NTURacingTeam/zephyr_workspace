@@ -17,7 +17,7 @@ LOG_MODULE_REGISTER(p51_curr, CONFIG_SENSOR_LOG_LEVEL);
 
 #define P51_CURR_MIN_UA 4000
 #define P51_CURR_MAX_UA 20000
-#define P51_CURR_SCALE_UA (P51_CURR_MIN_UA - P51_CURR_MAX_UA)
+#define P51_CURR_SCALE_UA (P51_CURR_MAX_UA - P51_CURR_MIN_UA)
 
 struct p51_curr_data {
   struct sensor_value val;
@@ -107,7 +107,7 @@ static int p51_curr_sample_fetch(const struct device* dev,
     ua = P51_CURR_MAX_UA;
   }
 
-  int64_t conv = (ua - P51_CURR_MIN_UA) * config->full_scale *
+  int64_t conv = (int64_t)(ua - P51_CURR_MIN_UA) * config->full_scale *
                  PSI_TO_MILLI_HPA / P51_CURR_SCALE_UA;
   sensor_value_from_milli(&data->val, conv);
 
