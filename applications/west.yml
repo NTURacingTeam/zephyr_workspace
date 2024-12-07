@@ -10,5 +10,5 @@ manifest:
   projects:
     - name: zephyr
       remote: nturt
-      revision: v3.7.0-nturt
+      revision: v4.0.0-nturt
       import: true

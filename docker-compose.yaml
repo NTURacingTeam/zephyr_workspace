@@ -6,14 +6,22 @@ services:
     hostname: zephyr
     user: user:user
     group_add:
+      - audio
       - dialout
       - sudo
+      - video
+    environment:
+      DISPLAY: ${DISPLAY}
+      QT_X11_NO_MITSHM: 1
     volumes:
       - /dev:/dev
       - /etc/localtime:/etc/localtime:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
       - .:/workdir
     tmpfs:
       - /tmp
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     tty: true
     stdin_open: true
     privileged: true

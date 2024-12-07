@@ -16,21 +16,18 @@
         "twister":  {
             "host_test_arch": "qemu_x86",
         },
+
         // board support package
         "bsp": {
-            "cpu": "",  // must be used if multi core system (put _m4 or _m7 here for example)
-            "soc": "stm32_g474re",
-            "board": "nucleo_g474re",
-            // "soc": "stm32_g431kb",
-            // "board": "nucleo_g431kb",
-            // "soc": "stm32_h743zi",
-            // "board": "nucleo_h743zi",
-            // "soc": "esp32",
-            // "board": "esp32",
+            // "board": "nucleo_g431kb", "soc": "stm32_g431kb", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/applications/boards",
+            "board": "nucleo_g474re", "soc": "stm32_g474re", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
+            // "board": "nucleo_h723zg", "soc": "stm32_h723zg", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
+            // "board": "nucleo_h743zi", "soc": "stm32_h743zi", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
+            // "board": "stm32_min_dev", "soc": "stm32_f103c8", "vendor": "others", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
+
             // "board": "native_sim",
-            "vendor": "st",
-            "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
-            // "board_root": "${workspaceFolder:zephyrproject}/applications/boards",
+
+            "cpu": "", // must be used if multi core system (put /m4 or /m7 here for example)
             "board_path": "${config:bsp.board_root}/${config:bsp.vendor}/${config:bsp.board}",
             "debug_config": "${config:bsp.board_path}/support/openocd.cfg"
         },
@@ -39,7 +36,7 @@
         "app": {
             "name": "${workspaceFolder:app}",
             "build_dir": "${workspaceFolder:app}/build",
-            "cmake_opts": "" // "-DCONFIG_COMPILER_SAVE_TEMPS=y"
+            "cmake_opts": "-DCONFIG_COMPILER_SAVE_TEMPS=y"
         },
 
         "C_Cpp.default.compilerPath": "${config:zephyr_sdk_path}/bin/arm-zephyr-eabi-gcc",
@@ -60,6 +57,7 @@
         "files.associations": {
             "*.overlay": "dts",
             "Kconfig": "plaintext",
+            "Kconfig.*": "plaintext",
         },
     }
 }

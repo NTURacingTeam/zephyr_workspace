@@ -6,8 +6,6 @@
             "type": "cortex-debug",
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
-            // "runToEntryPoint": "main",
-            // "breakAfterReset": true,
             "servertype": "openocd",
             "interface": "swd",
             "device": "${config:bsp.soc}",
@@ -19,7 +17,7 @@
             "showDevDebugOutput": "none",
             "liveWatch": {
                 "enabled": true,
-                "samplesPerSecond": 1
+                "samplesPerSecond": 2
             },
             "preLaunchTask": "Wset Build and Flash"
         },
@@ -49,9 +47,8 @@
             "type": "cortex-debug",
             "cwd": "${workspaceFolder:app}",
             "executable": "${config:app.build_dir}/zephyr/zephyr.elf",
-            "runToEntryPoint": "main",
             "servertype": "external",
-            "gdbTarget": "raspberrypi.local:3333",
+            "gdbTarget": "localhost:3333",
             "armToolchainPath": "${config:zephyr_sdk_path}/arm-zephyr-eabi/bin",
             "toolchainPrefix": "arm-zephyr-eabi",
             "showDevDebugOutput": "none",
