@@ -1,5 +1,0 @@
-if LED_STRIP
-
-rsource "Kconfig.gpio"
-
-endif # LED_STRIP

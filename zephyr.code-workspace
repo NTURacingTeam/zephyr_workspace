@@ -1,12 +1,12 @@
 {
     "folders": [
         {
-            "name": "zephyrproject",
+            "name": "zephyr_workspace",
             "path": "."
         },
         {
             "name": "app",
-            "path": "applications/app/blink"
+            "path": "blink"
         }
     ],
 
@@ -19,11 +19,11 @@
 
         // board support package
         "bsp": {
-            // "board": "nucleo_g431kb", "soc": "stm32_g431kb", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/applications/boards",
-            "board": "nucleo_g474re", "soc": "stm32_g474re", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
-            // "board": "nucleo_h723zg", "soc": "stm32_h723zg", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
-            // "board": "nucleo_h743zi", "soc": "stm32_h743zi", "vendor": "st", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
-            // "board": "stm32_min_dev", "soc": "stm32_f103c8", "vendor": "others", "board_root": "${workspaceFolder:zephyrproject}/zephyr/boards",
+            // "board": "nucleo_g431kb", "soc": "stm32_g431kb", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/applications/boards",
+            "board": "nucleo_g474re", "soc": "stm32_g474re", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
+            // "board": "nucleo_h723zg", "soc": "stm32_h723zg", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
+            // "board": "nucleo_h743zi", "soc": "stm32_h743zi", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
+            // "board": "stm32_min_dev", "soc": "stm32_f103c8", "vendor": "others", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
 
             // "board": "native_sim",
 
@@ -42,13 +42,13 @@
         "C_Cpp.default.compilerPath": "${config:zephyr_sdk_path}/bin/arm-zephyr-eabi-gcc",
         "C_Cpp.default.compileCommands": "${config:app.build_dir}/compile_commands.json",
         "C_Cpp.default.includePath": [
-            "${workspaceFolder:zephyrproject}/zephyr",
+            "${workspaceFolder:zephyr_workspace}/zephyr",
             "${config:zephyr_sdk_path}/arm-zephyr-eabi/include",
             "${config:zephyr_sdk_path}/arm-zephyr-eabi/sys-include"
         ],
 
         "[c]": {
-        "editor.defaultFormatter": "xaver.clang-format",
+            "editor.defaultFormatter": "xaver.clang-format",
         },
         "[cpp]": {
             "editor.defaultFormatter": "xaver.clang-format"

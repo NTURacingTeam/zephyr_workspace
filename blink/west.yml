@@ -2,13 +2,9 @@ manifest:
   remotes:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
-    - name: nturt
-      url-base: https://github.com/NTURacingTeam
-
-  group-filter: [+optional]
 
   projects:
     - name: zephyr
-      remote: nturt
-      revision: v4.0.0-nturt
+      remote: zephyrproject-rtos
+      revision: main
       import: true

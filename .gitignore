@@ -1,11 +1,8 @@
 build
 
-# west config
-/.west
+# ignore every directory in this directory
+/*/
 
-# zephyr projects from applications/west.yml
-/bootloader
-/modules
-/optional
-/tools
-/zephyr
+# except for vscode configs and blink example
+!/.vscode
+!/blink

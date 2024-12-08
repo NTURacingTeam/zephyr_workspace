@@ -1,3 +1,0 @@
-zephyr_library()
-
-zephyr_library_sources_ifdef(CONFIG_AUXDISPLAY_GPIO_SEG_DISPLAY auxdisplay_gpio_seg_display.c)

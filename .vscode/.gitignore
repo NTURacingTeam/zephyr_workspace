@@ -1,4 +1,7 @@
+# ignore everything in this directory
 /*
+
+# except for this file and some configs
 !.gitignore
 !extensions.json
 !launch.json
