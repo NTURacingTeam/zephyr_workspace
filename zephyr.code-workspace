@@ -19,8 +19,7 @@
 
         // board support package
         "bsp": {
-            // "board": "nucleo_g431kb", "soc": "stm32_g431kb", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/applications/boards",
-            "board": "nucleo_g474re", "soc": "stm32_g474re", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
+            // "board": "nucleo_g474re", "soc": "stm32_g474re", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
             // "board": "nucleo_h723zg", "soc": "stm32_h723zg", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
             // "board": "nucleo_h743zi", "soc": "stm32_h743zi", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
             // "board": "stm32_min_dev", "soc": "stm32_f103c8", "vendor": "others", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
