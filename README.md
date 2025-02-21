@@ -1,16 +1,28 @@
 # Zephyr Workspace
 
-Workspace for hosting Zephyr RTOS applications targeting VS Code as the IDE.
+Workspace for developing [Zephyr RTOS](https://www.zephyrproject.org) applications targeting VS Code as the IDE.
 
-## Requirements
+## Features
 
-- Linux operating system (native or WSL)
-- Docker
-- VS Code
+- Easy Zephyr installation via Docker
+- VS Code Task configurations for:
+    - Building
+    - Cleaning
+    - Flashing
+    - Testing
+- VS Code Launch files for:
+    - Debugging remotely on target board
+    - Debugging natively on host machine
 
-## Usage
+## Usage Tutorial
 
-### Clone Repository
+### 0. Requirements
+
+- Linux environment (supports both native install and [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install))
+- [Docker Engine](https://docs.docker.com/engine/install/) installed in Linux environment
+- [VS Code](https://code.visualstudio.com/download)
+
+### 1. Clone Repository
 
 Clone this repository and change directory to it:
 
@@ -19,61 +31,74 @@ git clone https://github.com/NTURacingTeam/zephyr_workspace.git
 cd zephyr_workspace
 ```
 
-### Docker Image Install
+### 2. Build and Run Docker Container
 
-Build and run `zephyr` docker container using `docker compose`:
+Build and run a Docker container named `zephyr` using Docker Compose:
 
 ```bash
 docker compose up -d
 ```
 
-Then, attach to the shell of `zephyr` docker container:
+Then, attach to the shell of it:
 
 ```bash
 docker exec -it zephyr bash
 ```
 
-### Zephyr Workspace Initialization
+### 3. Initialize Zephyr Workspace
 
-In `/workdir` of the container, initialize it as zephyr workspace:
+In the `/workdir` directory of the container, initialize it as Zephyr workspace:
 
 ```bash
 west init -l <application_name>
 west update
 ```
 
-where `<application_name>` is the name of the application you want to develop, or you may use `blink` as a reference application included in this repository.
+where `<application_name>` is the name of the application you want to develop You may use `blink` as a reference application included in this repository.
 
-### Switching to Other Applications
+> Note: Since every Zephyr application has its own [west manifest](https://docs.zephyrproject.org/latest/develop/west/manifest.html), when switching to another application, you need to remove the current west configuration and reinitialize it:
+> 
+> ```bash
+> # in /workdir
+> rm -rf .west
+> west init -l <application_name>
+> west update
+> ```
 
-To switch to other applications with different `west` configuration, first remove the current west config and reinitialize it:
+### 4. Attach VS Code to Container
 
-```bash
-# in /workdir
-rm -rf .west
-west init -l <application_name>
-west update
-```
+Attach VS Code to the container we just created named `zephyr` using both [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) VS Code Extensions.
 
-### VS Code Support
+> Note: If you are using WSL2, you need to install the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension and attach to the WSL2 instance first before installing the Docker and Dev Containers extensions.
 
-Attach vs code to the container, then open workspace form `/workdir/zephyr.code-workspace` in VS Code.
+Then open VS Code Workspace using `File -> Open Workspace from File` from the menu and select `/workdir/zephyr.code-workspace`.
 
-#### VS Code Tasks and Launch
+### 5. Configure for the Application and Target Board
 
-This repository provides plenty utilities tasks in [.vscode/tasks.json](.vscode/tasks.json) and launch files in [.vscode/launch.json](.vscode/launch.json) to build, flash and debug zephyr.
+Before we can build and flash the application to target board, have to edit the `zephyr.code-workspace` file to match the application and target board we are developing. Change the following settings:
 
-#### Settings
+- "folders" -> "path": the path to your application (default to `blink` reference application)
+- "settings" -> "bsp": board support package settings
+    - "board": the board you are using
+    - "board_root": the path to the board
+    - "soc": the soc you are using
+    - "vendor": the vendor of the board
+    
+    (the default values for `NUCLEO-G474RE` are suffice for now)
 
-According to your application, you may need to modify the following settings in `/workdir/zephyr.code-workspace` in order to make the tasks and launch files work properly:
+> Note: VS Code caches settings, so you may need to restart VS Code to make the changes take effect after editing settings in `zephyr.code-workspace` using `Developer: Reload Window` in Command Palette.
 
-- "folders" -> "path": the path to your application
-- "settings" -> "bsp" -> "board": the board you are using
-- "settings" -> "bsp" -> "board_root": the path to the board
-- "settings" -> "bsp" -> "soc": the soc you are using
-- "settings" -> "bsp" -> "vendor": the vendor of the board
+### 6. Build and Flash Application
 
-> Note: VS Code caches the settings, so you may need to restart VS Code to make the changes take effect.
+First attach target board to your computer.
+
+> Note: If you are using WSL2, by default USB devices are not accessible from WSL2. You need to follow [this guide](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) first and pass the attached board to WSL2 using `usbpid` command.
+
+Then you can build and flash the application using the provided Tasks by pressing `Ctrl+Shift+P` or `F1` to open the Command Palette and selecting `Tasks: Run Task` and then `West Build and Flash`.
+
+### 7. Debug Application
+
+You can debug the application using the provided Launch files by pressing `F5` or selecting `Run and Debug -> Start Debugging` from the sidebar.
 
 ## References
 

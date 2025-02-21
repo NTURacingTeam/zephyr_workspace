@@ -56,6 +56,14 @@
                 "enabled": true,
                 "samplesPerSecond": 2
             }
+        },
+        {
+            "name": "Build & Debug in Native Sim",
+            "request": "launch",
+            "type":"cppdbg",
+            "cwd": "${workspaceFolder:app}",
+            "program": "${config:app.build_dir}/zephyr/zephyr.exe",
+            "preLaunchTask": "West Build"
         }
     ]
 }

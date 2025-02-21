@@ -18,7 +18,9 @@
                 "--",
                 "${config:app.cmake_opts}",
             ],
-            "problemMatcher": [ "$gcc" ]
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "West Flash",
@@ -30,7 +32,9 @@
                 "--build-dir",
                 "${config:app.build_dir}",
             ],
-            "problemMatcher": [ "$gcc" ]
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "Wset Build and Flash",
@@ -38,12 +42,14 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "dependsOn":[
+            "dependsOn": [
                 "West Build",
                 "West Flash",
             ],
             "dependsOrder": "sequence",
-            "problemMatcher": [ "$gcc" ]
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "Clean Build",
@@ -55,6 +61,21 @@
                 "${config:app.build_dir}"
             ],
             "dependsOn": [],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run in Emulation/Simulation",
+            "type": "shell",
+            "group": "build",
+            "command": "${config:west}",
+            "args": [
+                "build",
+                "-t",
+                "run",
+            ],
+            "dependsOn": [
+                "West Build"
+            ],
             "problemMatcher": []
         },
         {
@@ -72,7 +93,7 @@
             "dependsOn": [
                 // "West Build Bootloader",
                 // "West Build App",
-             ],
+            ],
             "problemMatcher": []
         },
         {
@@ -95,15 +116,18 @@
             "dependsOn": [
                 // "West Build Bootloader",
                 // "West Build App",
-             ],
+            ],
             "problemMatcher": []
         },
         {
-            "label": "Twister Clean Output",
+            "label": "Clean Twister Output",
             "type": "shell",
             "group": "build",
             "command": "rm",
-            "args": ["-rf", "*twister-out*"],
+            "args": [
+                "-rf",
+                "*twister-out*"
+            ],
             "dependsOn": [],
             "problemMatcher": []
         }
