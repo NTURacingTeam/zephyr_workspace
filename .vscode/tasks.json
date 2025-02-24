@@ -72,6 +72,8 @@
                 "build",
                 "-t",
                 "run",
+                "--build-dir",
+                "${config:app.build_dir}",
             ],
             "dependsOn": [
                 "West Build"
