@@ -31,6 +31,8 @@
                 "flash",
                 "--build-dir",
                 "${config:app.build_dir}",
+                "--runner",
+                "${config:bsp.debug_runner}",
             ],
             "problemMatcher": [
                 "$gcc"
