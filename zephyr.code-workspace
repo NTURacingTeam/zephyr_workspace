@@ -25,6 +25,8 @@
             // "board": "nucleo_h743zi", "soc": "stm32_h743zi", "vendor": "st", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
             // "board": "stm32_min_dev", "soc": "stm32_f103c8", "vendor": "others", "board_root": "${workspaceFolder:zephyr_workspace}/zephyr/boards",
 
+            // "board": "ep6_vcu", "soc": "stm32_h743zi", "vendor": "nturt", "board_root": "${workspaceFolder:zephyr_workspace}/nturt_zephyr_common/boards",
+
             // "board": "native_sim",
 
             "cpu": "", // must be used if multi core system (put /m4 or /m7 here for example)

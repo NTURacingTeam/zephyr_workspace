@@ -2,9 +2,8 @@
     "recommendations": [
         "cschlosser.doxdocgen",
         "marus25.cortex-debug",
-        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
         "plorefice.devicetree",
-        "twxs.cmake",
         "webfreak.debug",
         "xaver.clang-format",
     ]

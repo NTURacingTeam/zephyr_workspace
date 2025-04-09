@@ -18,9 +18,14 @@ Workspace for developing [Zephyr RTOS](https://www.zephyrproject.org) applicatio
 
 ### 0. Requirements
 
-- Linux environment (supports both native install and [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install))
-- [Docker Engine](https://docs.docker.com/engine/install/) installed in Linux environment
 - [VS Code](https://code.visualstudio.com/download)
+- Linux environment (supports both native install and [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)), in which the following are installed;
+    - [Docker Engine](https://docs.docker.com/engine/install)
+    - [stlink-tools](https://github.com/stlink-org/stlink?tab=readme-ov-file#installation), which can be installed by
+
+        ```bash
+        sudo apt install stlink-tools
+        ```
 
 ### 1. Clone Repository
 
