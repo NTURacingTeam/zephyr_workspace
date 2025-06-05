@@ -1,10 +1,11 @@
 {
     "recommendations": [
         "cschlosser.doxdocgen",
+        "luveti.kconfig",
         "marus25.cortex-debug",
         "ms-vscode.cpptools-extension-pack",
         "plorefice.devicetree",
         "webfreak.debug",
-        "xaver.clang-format",
+        "xaver.clang-format"
     ]
 }

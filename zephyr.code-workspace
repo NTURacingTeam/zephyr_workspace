@@ -60,8 +60,7 @@
 
         "files.associations": {
             "*.overlay": "dts",
-            "Kconfig": "plaintext",
-            "Kconfig.*": "plaintext",
+            "Kconfig.*": "kconfig",
         },
     }
 }
