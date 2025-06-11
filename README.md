@@ -59,9 +59,10 @@ west init -l <application_name>
 west update
 ```
 
-where `<application_name>` is the name of the application you want to develop You may use `blink` as a reference application included in this repository.
+where `<application_name>` is the name of the application you want to develop. You may use `blink` as a reference application included in this repository.
 
-> Note: Since every Zephyr application has its own [west manifest](https://docs.zephyrproject.org/latest/develop/west/manifest.html), when switching to another application, you need to remove the current west configuration and reinitialize it:
+> [!NOTE]
+> Since every Zephyr application has its own [west manifest](https://docs.zephyrproject.org/latest/develop/west/manifest.html), when switching to another application, you need to remove the current west configuration and reinitialize it:
 > 
 > ```bash
 > # in /workdir
@@ -74,7 +75,8 @@ where `<application_name>` is the name of the application you want to develop Yo
 
 Attach VS Code to the container we just created named `zephyr` using both [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) VS Code Extensions.
 
-> Note: If you are using WSL2, you need to install the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension and attach to the WSL2 instance first before installing the Docker and Dev Containers extensions.
+> [!NOTE]
+> If you are using WSL2, you need to install the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension and attach to the WSL2 instance first before installing the Docker and Dev Containers extensions.
 
 Then open VS Code Workspace using `File -> Open Workspace from File` from the menu and select `/workdir/zephyr.code-workspace`.
 
@@ -91,13 +93,15 @@ Before we can build and flash the application to target board, have to edit the 
     
     (the default values for `NUCLEO-G474RE` are suffice for now)
 
-> Note: VS Code caches settings, so you may need to restart VS Code to make the changes take effect after editing settings in `zephyr.code-workspace` using `Developer: Reload Window` in Command Palette.
+> [!NOTE]
+> Since VS Code caches settings, you may need to restart VS Code to make the changes take effect after editing settings in `zephyr.code-workspace` using `Developer: Reload Window` in Command Palette.
 
 ### 6. Build and Flash Application
 
 First attach target board to your computer.
 
-> Note: If you are using WSL2, by default USB devices are not accessible from WSL2. You need to follow [this guide](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) first and pass the attached board to WSL2 using `usbpid` command.
+> [!NOTE]
+> If you are using WSL2, by default USB devices are not accessible from WSL2. You need to follow [this guide](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) first and pass the attached board to WSL2 using `usbpid` command.
 
 Then you can build and flash the application using the provided Tasks by pressing `Ctrl+Shift+P` or `F1` to open the Command Palette and selecting `Tasks: Run Task` and then `West Build and Flash`.
 
