@@ -13,7 +13,6 @@ RUN apt-get update && \
     	htop \
     	minicom \
     	openocd \
-    	tmux \
     	vim && \
     rm -rf /var/lib/apt/lists/*
 
@@ -23,10 +22,10 @@ RUN wget ${WGET_ARGS} https://downloads.sourceforge.net/project/doxygen/rel-${DO
 	ln -fs /opt/doxygen-${DOXYGEN_VERSION}/bin/doxygen /usr/local/bin && \
 	rm doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz
 
-RUN pip3 install --no-cache-dir \
-		breathe \
-		sphinx \
-		sphinx-rtd-theme
+# install documentation dependencies
+RUN wget https://raw.githubusercontent.com/NTURacingTeam/nturt_zephyr_common/refs/heads/master/doc/requirements.txt \
+    && pip3 install --no-cache-dir -r requirements.txt \
+	&& rm requirements.txt
 
 # change default shell to bash
 RUN chsh -s /bin/bash user
