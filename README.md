@@ -19,7 +19,7 @@ Workspace for developing [Zephyr RTOS](https://www.zephyrproject.org) applicatio
 ### 0. Requirements
 
 - [VS Code](https://code.visualstudio.com/download)
-- Linux environment (supports both native install and [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)), in which the following are installed;
+- Linux environment (supports both native install and [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)), in which the following dependencies are installed;
     - [Docker Engine](https://docs.docker.com/engine/install)
     - [stlink-tools](https://github.com/stlink-org/stlink?tab=readme-ov-file#installation), which can be installed by
 
@@ -29,7 +29,7 @@ Workspace for developing [Zephyr RTOS](https://www.zephyrproject.org) applicatio
 
 ### 1. Clone Repository
 
-Clone this repository and change directory to it:
+Open a Linux terminal, then clone this repository and change directory to it:
 
 ```bash
 git clone https://github.com/NTURacingTeam/zephyr_workspace.git
@@ -71,14 +71,26 @@ where `<application_name>` is the name of the application you want to develop. Y
 > west update
 > ```
 
-### 4. Attach VS Code to Container
+### 4. Attach VS Code to WSL2 (required only for WSL2)
 
-Attach VS Code to the container we just created named `zephyr` using both [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) VS Code Extensions.
+Install the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) VS Code Extension and bring up the Command Palette with `Ctrl+Shift+P` or `F1`. Then we can attach to WSL2 by selecting `WSL: Connect to WSL`.
+
+After this step, in the lower left corner of the Status Bar, you should see that you're connected to your **WSL: Ubuntu**.
+
+![](https://code.visualstudio.com/assets/docs/remote/wsl-tutorial/wsl-status-bar.png)
+
+### 5. Attach VS Code to Container
+
+First install both [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) VS Code Extensions. Second, bring up the Command Palette with `Ctrl+Shift+P` or `F1` and select `Dev Containers: Attach to Running Container...`. Finally, select the `zephyr` container from the list to attach to VS Code to the container we just created.
+
+After this step, in the lower left corner of the Status Bar, you should see that you're connected to your **Container zephyr (zephyr)**, similar to the following:
+
+![](https://learn.microsoft.com/zh-tw/training/modules/use-docker-container-dev-env-vs-code/media/remote-indicator.png)
 
 > [!NOTE]
-> If you are using WSL2, you need to install the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension and attach to the WSL2 instance first before installing the Docker and Dev Containers extensions.
+> The VS Code Extensions are not shared across the host machine, WSL2 and Docker containers, so you must install Docker and Dev Containers extension in the WSL2 VS Code if you are using WSL2.
 
-Then open VS Code Workspace using `File -> Open Workspace from File` from the menu and select `/workdir/zephyr.code-workspace`.
+Then open VS Code Workspace using `File -> Open Workspace from File` from the menu bar and select `/workdir/zephyr.code-workspace` (just replace the default `/home/user` with this).
 
 ### 5. Configure for the Application and Target Board
 
