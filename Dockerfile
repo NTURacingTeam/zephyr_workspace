@@ -14,6 +14,7 @@ RUN apt-get update && \
 	graphviz \
     	htop \
     	minicom \
+		sshpass \
     	vim && \
     rm -rf /var/lib/apt/lists/*
 
@@ -22,6 +23,11 @@ RUN wget ${WGET_ARGS} https://downloads.sourceforge.net/project/doxygen/rel-${DO
 	tar xf doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz -C /opt && \
 	ln -fs /opt/doxygen-${DOXYGEN_VERSION}/bin/doxygen /usr/local/bin && \
 	rm doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz
+
+# install custom commands dependencies
+RUN wget https://raw.githubusercontent.com/NTURacingTeam/nturt_zephyr_common/refs/heads/master/scripts/requirements.txt \
+    && pip3 install --no-cache-dir -r requirements.txt \
+	&& rm requirements.txt
 
 # install documentation dependencies
 RUN wget https://raw.githubusercontent.com/NTURacingTeam/nturt_zephyr_common/refs/heads/master/doc/requirements.txt \
