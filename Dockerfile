@@ -11,28 +11,28 @@ USER root
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-	graphviz \
-    	htop \
-    	minicom \
-		sshpass \
-    	vim && \
+    graphviz \
+    htop \
+    minicom \
+    sshpass \
+    vim && \
     rm -rf /var/lib/apt/lists/*
 
 # install doxygen, overrides the default version in the base image
 RUN wget ${WGET_ARGS} https://downloads.sourceforge.net/project/doxygen/rel-${DOXYGEN_VERSION}/doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz && \
-	tar xf doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz -C /opt && \
-	ln -fs /opt/doxygen-${DOXYGEN_VERSION}/bin/doxygen /usr/local/bin && \
-	rm doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz
+    tar xf doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz -C /opt && \
+    ln -fs /opt/doxygen-${DOXYGEN_VERSION}/bin/doxygen /usr/local/bin && \
+    rm doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz
 
 # install custom commands dependencies
 RUN wget https://raw.githubusercontent.com/NTURacingTeam/nturt_zephyr_common/refs/heads/master/scripts/requirements.txt \
     && pip3 install --no-cache-dir -r requirements.txt \
-	&& rm requirements.txt
+    && rm requirements.txt
 
 # install documentation dependencies
 RUN wget https://raw.githubusercontent.com/NTURacingTeam/nturt_zephyr_common/refs/heads/master/doc/requirements.txt \
     && pip3 install --no-cache-dir -r requirements.txt \
-	&& rm requirements.txt
+    && rm requirements.txt
 
 # change default shell to bash
 RUN chsh -s /bin/bash user

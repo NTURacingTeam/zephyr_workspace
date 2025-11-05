@@ -5,6 +5,9 @@ services:
     container_name: zephyr
     hostname: zephyr
     user: user:user
+    privileged: true
+    tty: true
+    stdin_open: true
     group_add:
       - audio
       - dialout
@@ -12,6 +15,9 @@ services:
       - sudo
       - video
     environment:
+      TERM: xterm-256color
+      COLORTERM: truecolor
+      FORCE_COLOR: true
       DISPLAY: ${DISPLAY}
       QT_X11_NO_MITSHM: 1
     volumes:
@@ -23,6 +29,3 @@ services:
       - /tmp
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    tty: true
-    stdin_open: true
-    privileged: true
